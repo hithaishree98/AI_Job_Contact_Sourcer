@@ -1,23 +1,31 @@
 # AI Job Lead Generator (ADK + DataForSEO)
 
-This project demonstrates a robust, multi-agent pipeline for reliable, high-volume job lead generation. It is built on the Google Agent Development Kit (ADK) and utilizes the DataForSEO Google Jobs API to bypass unstable web scraping, ensuring clean, structured, and real-time job data.
+This project utilizes the Google Agent Development Kit (ADK) and the Gemini API to create a reliable and well-structured data pipeline. It automatically searches for job listings via a third-party SERP API, retrieves the data asynchronously, and processes the results with custom logic for high-quality, sorted output.
 
-## Features
+# Key Features & Technical Highlights
+Custom Deterministic Sorting: Implements a robust Python tool function (sort_job_listings) to normalize the mixed units in the time_ago field (hours, days, weeks) into a single comparable numeric key. This ensures listings are always accurately sorted from Newest to Oldest.
 
-* **Asynchronous API Handling:** Manages the two-step (POST/GET) process required by high-volume SERP APIs.
-* **Structured Data Output:** Directly consumes clean JSON data from Google Jobs, eliminating parsing errors common in web scraping.
-* **End-to-End Automation:** Automatically submits the query, waits for the results, cleans the data, and exports the final output to a CSV file.
-* **Secure Credential Management:** Utilizes the Kaggle Secrets utility to store sensitive API keys (Gemini, DataForSEO) securely.
+LLM Agent Orchestration: Uses a Sequential Agent (root_orchestrator) to manage the workflow across five distinct processing stages.
 
-##  Architecture
+Structured Data Output: The pipeline enforces a clean output structure, extracting key fields (title, employer_name, location, source_url, time_ago) and exporting the final, clean, and sorted data to a .csv file.
 
-The system is orchestrated by a **Sequential Agent** to enforce the necessary dependency chain for the asynchronous API call:
+Asynchronous API Handling: Manages the interaction with the external DataForSEO API using the Task POST/GET pattern, demonstrating competence in handling non-instantaneous data retrieval.
 
-1.  **Submission:** `submit_data_task_agent` (POST Request)
-2.  **Retrieval:** `retrieve_data_agent` (Handles wait and GET Request)
-3.  **Cleaning:** `format_agent` (LLM parses complex JSON)
-4.  **Export:** `export_agent` (Converts clean JSON to CSV)
+Tool-Centric Design: Offloads complex and repetitive data manipulation tasks (filtering, sorting, CSV export) from the large language model's context window to dedicated, reliable Python tool functions.
 
+# Architecture and Execution Flow
+The workflow is managed by the sequential root_orchestrator, ensuring reliable, step-by-step execution:
+
+Agent Flow
+submit_agent: Sends the search query (e.g., "Software Engineer") to the DataForSEO API and extracts the unique task_id.
+
+retrieve_agent: Uses the task_id to retrieve the full raw job search results JSON after a designated wait time. (Note: In a production environment, this step would be enhanced with non-blocking polling.)
+
+format_agent: Finds the job list inside the raw API JSON and extracts clean fields, filtering out jobs older than 7 days.
+
+sort_agent: Calls the custom sort_job_listings tool to process the list and ensure it is organized by posting time (newest first).
+
+export_agent: Takes the final, clean, and sorted JSON list and saves it to final_software_engineer_jobs.csv using the export_to_csv tool.
 
 
 
