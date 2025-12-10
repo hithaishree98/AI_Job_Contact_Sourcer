@@ -37,7 +37,5 @@ You must define the following environment variables in your Kaggle Secrets panel
 
 
 
-### 1. Install Dependencies
-
 Ensure your notebook environment has the necessary libraries:
 
