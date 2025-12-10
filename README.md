@@ -23,11 +23,9 @@ The system is orchestrated by a **Sequential Agent** to enforce the necessary de
 
 You must define the following environment variables in your Kaggle Secrets panel:
 
-| Name | Value |
-| :--- | :--- |
-| `GOOGLE_API_KEY` | Your Gemini API Key |
-| `DFSEO_LOGIN` | Your DataForSEO API Login (Email) |
-| `DFSEO_PASSWORD` | Your DataForSEO API Password |
+`GOOGLE_API_KEY`
+`DFSEO_LOGIN` - Your DataForSEO API Login (Email) 
+`DFSEO_PASSWORD`- Your DataForSEO API Password 
 
 
 
