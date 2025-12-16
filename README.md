@@ -1,4 +1,4 @@
-# AI Job Lead Generator (ADK + DataForSEO)
+# AI Job Sourcer (ADK + DataForSEO)
 
 This project utilizes the Google Agent Development Kit (ADK) and the Gemini API to create a reliable and well-structured data pipeline. It automatically searches for job listings via a third-party SERP API, retrieves the data asynchronously, and processes the results with custom logic for high-quality, sorted output.
 
